@@ -8,10 +8,10 @@ import { NotificationModule } from './notifications/notification.module';
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost',
-      port: 5433,
+      host: 'boringly-popular-thrasher.data-1.use1.tembo.io',
+      port: 5432,
       username: 'postgres',
-      password: 'postgres',
+      password: 'qsFNxZbOMJqy3N6p',
       database: 'postgres',
       autoLoadEntities: true,
       synchronize: true,
