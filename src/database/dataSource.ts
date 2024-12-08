@@ -7,6 +7,9 @@ export const AppDataSource = new DataSource({
   username: 'postgres',
   password: 'qsFNxZbOMJqy3N6p',
   database: 'postgres',
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });
 
 AppDataSource.initialize()

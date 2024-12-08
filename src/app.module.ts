@@ -13,6 +13,9 @@ import { NotificationModule } from './notifications/notification.module';
       username: 'postgres',
       password: 'qsFNxZbOMJqy3N6p',
       database: 'postgres',
+      ssl: {
+        rejectUnauthorized: false,
+      },
       autoLoadEntities: true,
       synchronize: true,
     }),
