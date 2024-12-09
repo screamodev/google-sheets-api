@@ -14,12 +14,10 @@ export class RowsController {
   async handleWebhook(@Body() data: any) {
     this.logger.log('Received webhook:', data);
 
-    console.log('all data', data);
-
-    const { sheetName, range, values } = data;
+    const { sheetName, range, values, users } = data;
 
     const content = JSON.stringify({ sheetName, range, values });
-    const row = await this.rowService.createRow(content);
+    const row = await this.rowService.createRow(content, users);
 
     this.notificationGateway.emitNewRow(row);
 

@@ -14,7 +14,7 @@ export class RowsService {
     private readonly emailService: EmailService,
   ) {}
 
-  async createRow(content: string): Promise<Row> {
+  async createRow(content: string, emails: string[]): Promise<Row> {
     const newRow = this.rowRepository.create({ content });
     const savedRow = await this.rowRepository.save(newRow);
 
@@ -23,15 +23,13 @@ export class RowsService {
     console.log('Count', this.recordedRowsCount);
 
     if (this.recordedRowsCount % 10 === 0) {
-      await this.sendNotificationEmails();
+      await this.sendNotificationEmails(emails);
     }
 
     return savedRow;
   }
 
-  private async sendNotificationEmails(): Promise<void> {
-    const emails = await this.getEmailsFromGoogleSheet();
-
+  private async sendNotificationEmails(emails: string[]): Promise<void> {
     const subject = 'Added 10 new lines';
     const text = `Added ${this.recordedRowsCount} lines in database.`;
 
@@ -41,10 +39,6 @@ export class RowsService {
     } catch (error) {
       console.error('Error during sending email:', error.message);
     }
-  }
-
-  private async getEmailsFromGoogleSheet(): Promise<string[]> {
-    return ['arsenii.iurchenko@gmail.com'];
   }
 
   async getAllRows(): Promise<Row[]> {
