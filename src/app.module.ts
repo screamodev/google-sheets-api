@@ -5,8 +5,7 @@ import { RowsModule } from './rows/rows.module';
 import { GoogleSheetsModule } from './google-sheets/google-sheets.module';
 import { NotificationModule } from './notifications/notification.module';
 import { EmailModule } from './email/email.module';
-import { LoggingMiddleware } from './middlewares/loggingMiddleware';
-import { RowsController } from './rows/rows.controller';
+import { LoggerMiddleware } from './middlewares/logger.middleware';
 
 @Module({
   imports: [
@@ -38,6 +37,6 @@ import { RowsController } from './rows/rows.controller';
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(LoggingMiddleware).forRoutes(RowsController);
+    consumer.apply(LoggerMiddleware).forRoutes('*');
   }
 }
