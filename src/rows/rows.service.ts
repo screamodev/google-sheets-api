@@ -20,6 +20,8 @@ export class RowsService {
 
     this.recordedRowsCount++;
 
+    console.log('Count', this.recordedRowsCount);
+
     if (this.recordedRowsCount % 10 === 0) {
       await this.sendNotificationEmails();
     }
