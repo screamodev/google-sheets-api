@@ -1,10 +1,12 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { RowsModule } from './rows/rows.module';
 import { GoogleSheetsModule } from './google-sheets/google-sheets.module';
 import { NotificationModule } from './notifications/notification.module';
 import { EmailModule } from './email/email.module';
+import { LoggingMiddleware } from './middlewares/loggingMiddleware';
+import { RowsController } from './rows/rows.controller';
 
 @Module({
   imports: [
@@ -34,4 +36,8 @@ import { EmailModule } from './email/email.module';
     RowsModule,
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LoggingMiddleware).forRoutes(RowsController);
+  }
+}
