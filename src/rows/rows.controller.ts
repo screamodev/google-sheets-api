@@ -14,6 +14,8 @@ export class RowsController {
   async handleWebhook(@Body() data: any) {
     this.logger.log('Received webhook:', data);
 
+    console.log('all data', data);
+
     const { sheetName, range, values } = data;
 
     const content = JSON.stringify({ sheetName, range, values });

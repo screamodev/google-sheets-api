@@ -1,11 +1,12 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { LoggingMiddleware } from './middlewares/loggingMiddleware';
+import { Logger } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // Swagger Configuration
   const config = new DocumentBuilder()
     .setTitle('Google Sheets Integration')
     .setDescription('API for integrating Google Sheets and Webhooks')
@@ -14,6 +15,9 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
+
+  app.useLogger(new Logger());
+  app.use(new LoggingMiddleware().use);
 
   await app.listen(3000);
 }
